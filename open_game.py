@@ -10,8 +10,14 @@ import json
 import os
 import random
 import tkinter as tk
-from tkinter import messagebox,simpledialog
+from tkinter import messagebox,simpledialog,filedialog
 
+
+root = tk.Tk()
+root.withdraw()
+
+load_save = messagebox.askyesno('Open A World','Confirm that the archive is loaded .')
+root.destroy()
 
 app = Ursina()
 
@@ -202,7 +208,7 @@ class Sight(Entity):
 def save_game():
     root = tk.Tk()
     root.withdraw()
-    save_name = simpledialog.askstring('Save The Game','Please enter a name for the archive :')
+    save_name = simpledialog.askstring('Save Game','Please enter a name for the archive :')
     root.destroy()
     
     if not save_name:
@@ -238,6 +244,87 @@ def save_game():
     
     with open(SAVE_FILE,'w',encoding='utf-8') as f:
         json.dump(save_data,f,ensure_ascii=False,indent=4)
+    
+
+def load_game():
+    root = tk.Tk()
+    root.withdraw()
+    
+    save_files = [f for f in os.listdir('saves') if f.endswith('_game_save.json')]
+    
+    if not save_files:
+        messagebox.showinfo('Open A World','No archive files found !')
+        quit()
+    
+    selected_file = filedialog.askopenfilename(
+        initialdir = 'saves',
+        title = 'Select An Archive File',
+        filetypes=(('Archive File','*_game_save.json'),('Others','*.*'))
+    )
+    root.destroy()
+    
+    if not selected_file:
+        quit()
+    
+    try:
+        with open(selected_file,'r',encoding='utf-8') as f:
+            save_data = json.load(f)
+        
+        for entity in scene.entities:
+            if isinstance(entity,Block):
+                destroy(entity)
+        
+        for block_data in save_data['blocks']:
+            pos = block_data['position']
+            block_type = block_data['type']
+            
+            textures = {
+                1: grass_texture,
+                2: stone_texture,
+                3: brick_texture,
+                4: dirt_texture,
+                5: wood_texture,
+                6: diamond_texture,
+                7: tree_texture,
+                8: leaves_texture,
+                9: bedrock_texture,
+                11: sand_texture,
+                12: glass_texture
+            }
+            
+            Block(position=(pos[0],pos[1],pos[2]),texture=textures.get(block_type,grass_texture))
+        
+        player_data = save_data['player']
+        player.position = tuple(player_data['position'])
+        player.rotation = tuple(player_data['rotation'])
+        global block_pick
+        block_pick = player_data['block_pick']
+        
+        global inventory
+        destroy(inventory)
+        inventory_textures = {
+            1: inv1_texture,
+            2: inv2_texture,
+            3: inv3_texture,
+            4: inv4_texture,
+            5: inv5_texture,
+            6: inv6_texture,
+            7: inv7_texture,
+            8: inv8_texture,
+            9: inv9_texture,
+            11: inv11_texture,
+            12: inv12_texture
+        }
+        inventory = Inventory(inventory_textures.get(block_pick,inv1_texture))
+        
+        game_data = save_data['game']
+        global sun_angle,sun_move
+        sun_angle = game_data['sun_angle']
+        sun_move = game_data['sun_move']
+        
+        return True
+    except Exception as e:
+        return False
 
 
 def create_world():
@@ -276,7 +363,11 @@ sky = Sky()
 sun = Sun()
 
 
-create_world()
+if load_save:
+    if not load_game():
+        create_world()
+else:
+    quit()
 
 
 def input(key):
@@ -291,10 +382,12 @@ def input(key):
                 save_game()
             quit()
         root.destroy()
-    elif key == 'q':
+    elif key == 'r':
         window.exit_button.visible = not window.exit_button.visible
-    elif key == 'e':
+    elif key == 't':
         window.fps_counter.enabled = not window.fps_counter.enabled
+    elif key == 'f5':
+        save_game()
     
     hotkeys = {
         '1': 1,

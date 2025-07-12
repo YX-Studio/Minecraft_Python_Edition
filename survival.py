@@ -1,7 +1,6 @@
-# Version 1.0.0.50
+# Version 2.0.0.57
 # By YXStudio 2023~2025.
-# Feb.22nd,2025
-
+# Jul.12th,2025
 
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
@@ -27,18 +26,17 @@ glass_texture      = load_texture('assets/textures/blocks/glass_block.png')
 
 barrier_texture    = load_texture('assets/textures/blocks/barrier_block.png')
 
-inv_texture        = load_texture('assets/textures/inventorys/inventory.png')
-inv1_texture       = load_texture('assets/textures/inventorys/inventory1.png')
-inv2_texture       = load_texture('assets/textures/inventorys/inventory2.png')
-inv3_texture       = load_texture('assets/textures/inventorys/inventory3.png')
-inv4_texture       = load_texture('assets/textures/inventorys/inventory4.png')
-inv5_texture       = load_texture('assets/textures/inventorys/inventory5.png')
-inv6_texture       = load_texture('assets/textures/inventorys/inventory6.png')
-inv7_texture       = load_texture('assets/textures/inventorys/inventory7.png')
-inv8_texture       = load_texture('assets/textures/inventorys/inventory8.png')
-inv9_texture       = load_texture('assets/textures/inventorys/inventory9.png')
-inv11_texture      = load_texture('assets/textures/inventorys/inventory11.png')
-inv12_texture      = load_texture('assets/textures/inventorys/inventory12.png')
+inv1_texture       = load_texture('assets/textures/inventorys/hotbar1.png')
+inv2_texture       = load_texture('assets/textures/inventorys/hotbar2.png')
+inv3_texture       = load_texture('assets/textures/inventorys/hotbar3.png')
+inv4_texture       = load_texture('assets/textures/inventorys/hotbar4.png')
+inv5_texture       = load_texture('assets/textures/inventorys/hotbar5.png')
+inv6_texture       = load_texture('assets/textures/inventorys/hotbar6.png')
+inv7_texture       = load_texture('assets/textures/inventorys/hotbar7.png')
+inv8_texture       = load_texture('assets/textures/inventorys/hotbar8.png')
+inv9_texture       = load_texture('assets/textures/inventorys/hotbar9.png')
+inv11_texture      = load_texture('assets/textures/inventorys/hotbar11.png')
+inv12_texture      = load_texture('assets/textures/inventorys/hotbar12.png')
 
 arm_texture        = load_texture('assets/textures/arm/arm_texture.png')
 
@@ -65,9 +63,19 @@ sun_move = 0
 def input(key):
     if key == 'escape':
         quit()
+    if key == 'r':
+        if window.exit_button.visible == False:
+            window.exit_button.visible = True
+        else:
+            window.exit_button.visible = False
+    if key == 't':
+        if window.fps_counter.enabled == False:
+            window.fps_counter.enabled = True
+        else:
+            window.fps_counter.enabled = False
 
 
-class Block(Button):
+class Block(Button): 
     def __init__(self,position=(0,0,0),texture=grass_texture):
         super().__init__(
             parent = scene,
@@ -107,48 +115,9 @@ class Block(Button):
                 if block_pick == 12:
                     Block(position = self.position+mouse.normal,texture=glass_texture)
             if key == 'left mouse down':
-                punch_sound.play()
-                destroy(self)
-
-class Bedrock(Button):
-    def __init__(self,position=(0,0,0)):
-        super().__init__(
-            parent = scene,
-            position = position,
-            model = 'assets/blends/block/block',
-            texture = bedrock_texture,
-            color = color.rgb(1,1,1),
-            highlight_color = color.rgb(1.1,1.1,1.1),
-            origin_y = 0.5,
-            scale = 0.5
-        )
-    
-    def input(self,key):
-        if self.hovered:
-            if key == 'right mouse down':
-                punch_sound.play()
-                if block_pick == 1:
-                    Block(position = self.position+mouse.normal,texture=grass_texture)
-                if block_pick == 2:
-                    Block(position = self.position+mouse.normal,texture=stone_texture)
-                if block_pick == 3:
-                    Block(position = self.position+mouse.normal,texture=brick_texture)
-                if block_pick == 4:
-                    Block(position = self.position+mouse.normal,texture=dirt_texture)
-                if block_pick == 5:
-                    Block(position = self.position+mouse.normal,texture=wood_texture)
-                if block_pick == 6:
-                    Block(position = self.position+mouse.normal,texture=diamond_texture)
-                if block_pick == 7:
-                    Block(position = self.position+mouse.normal,texture=tree_texture)
-                if block_pick == 8:
-                    Block(position = self.position+mouse.normal,texture=leaves_texture)
-                if block_pick == 9:
-                    Bedrock(position = self.position+mouse.normal)
-                if block_pick == 11:
-                    Block(position=self.position+mouse.normal,texture=sand_texture)
-                if block_pick == 11:
-                    Block(position=self.position+mouse.normal,texture=glass_texture)
+                if self.texture != bedrock_texture:
+                    punch_sound.play()
+                    destroy(self)
 
 class Barrier(Entity):
     def __init__(self,position=(0,0,0)):
@@ -274,7 +243,7 @@ def sflg():
                     Block(position=(x,-3,z),texture=stone_texture)
                 
                 Block(position=(x,-4,z),texture=stone_texture)
-                Bedrock(position=(x,-5,z))
+                Block(position=(x,-5,z),texture=bedrock_texture)
             elif rand_2tree_z == z and rand_2tree_x == x:
                 Block(position=(x  ,1,z)  ,texture=tree_texture)
                 Block(position=(x  ,2,z)  ,texture=tree_texture)
@@ -309,7 +278,7 @@ def sflg():
                     Block(position=(x,-3,z),texture=stone_texture)
                 
                 Block(position=(x,-4,z),texture=stone_texture)
-                Bedrock(position=(x,-5,z))
+                Block(position=(x,-5,z),texture=bedrock_texture)
             elif rand_3tree_z == z and rand_3tree_x == x:
                 Block(position=(x  ,1,z)  ,texture=tree_texture)
                 Block(position=(x  ,2,z)  ,texture=tree_texture)
@@ -344,7 +313,7 @@ def sflg():
                     Block(position=(x,-3,z),texture=stone_texture)
                 
                 Block(position=(x,-4,z),texture=stone_texture)
-                Bedrock(position=(x,-5,z))
+                Block(position=(x,-5,z),texture=bedrock_texture)
             else:
                 Block(position=(x,0,z),texture=grass_texture)
                 Block(position=(x,-1,z),texture=dirt_texture)
@@ -357,7 +326,7 @@ def sflg():
                     Block(position=(x,-3,z),texture=stone_texture)
                 
                 Block(position=(x,-4,z),texture=stone_texture)
-                Bedrock(position=(x,-5,z))
+                Block(position=(x,-5,z),texture=bedrock_texture)
     
     for br1 in range(13):
         Barrier(position=(br1,-3,-1))
@@ -406,7 +375,7 @@ def sfls():
                 Block(position=(x,-3,z),texture=stone_texture)
             
             Block(position=(x,-4,z),texture=stone_texture)
-            Bedrock(position=(x,-5,z))
+            Block(position=(x,-5,z),texture=bedrock_texture)
     
     for br1 in range(13):
         Barrier(position=(br1,-3,-1))
@@ -498,7 +467,7 @@ def swag():
                     Block(position=(x,y-3,z),texture=stone_texture)
                 
                 Block(position=(x,y-4,z),texture=stone_texture)
-                Bedrock(position=(x,y-5,z))
+                Block(position=(x,y-5,z),texture=bedrock_texture)
             elif rand_2tree_z==z and rand_2tree_x==x:
                 Block(position=(x  ,y+1,z)  ,texture=tree_texture)
                 Block(position=(x  ,y+2,z)  ,texture=tree_texture)
@@ -533,7 +502,7 @@ def swag():
                     Block(position=(x,y-3,z),texture=stone_texture)
                 
                 Block(position=(x,y-4,z),texture=stone_texture)
-                Bedrock(position=(x,y-5,z))
+                Block(position=(x,y-5,z),texture=bedrock_texture)
             elif rand_3tree_z==z and rand_3tree_x==x:
                 Block(position=(x  ,y+1,z)  ,texture=tree_texture)
                 Block(position=(x  ,y+2,z)  ,texture=tree_texture)
@@ -568,7 +537,7 @@ def swag():
                     Block(position=(x,y-3,z),texture=stone_texture)
                 
                 Block(position=(x,y-4,z),texture=stone_texture)
-                Bedrock(position=(x,y-5,z))
+                Block(position=(x,y-5,z),texture=bedrock_texture)
             else:
                 Block(position=(x,y,z),texture=grass_texture)
                 Block(position=(x,y-1,z),texture=dirt_texture)
@@ -581,7 +550,7 @@ def swag():
                     Block(position=(x,y-3,z),texture=stone_texture)
                 
                 Block(position=(x,y-4,z),texture=stone_texture)
-                Bedrock(position=(x,y-5,z))
+                Block(position=(x,y-5,z),texture=bedrock_texture)
     
     for br1 in range(13):
         Barrier(position=(br1,-3,-1))
@@ -635,7 +604,7 @@ def swas():
                 Block(position=(x,y-3,z),texture=stone_texture)
             
             Block(position=(x,y-4,z),texture=stone_texture)
-            Bedrock(position=(x,y-5,z))
+            Block(position=(x,y-5,z),texture=bedrock_texture)
     
     for br1 in range(13):
         Barrier(position=(br1,-3,-1))

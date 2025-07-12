@@ -23,11 +23,11 @@ def creatival():
 
     crea.geometry('450x250')
     crea.iconbitmap('_internal/icon/icon.ico')
-    crea.title('MINECRAFT 1.0.0.50 - New World - Creatival')
+    crea.title('MINECRAFT 2.0.0.57 - New World - Creatival')
 
 
-    label1 = Label(crea,text='MINECRAFT',font=('minecrafter',36),foreground='#262626')
-    label2 = Label(crea,text='Creatival',font=('minecraft ae pixel',14),foreground='#8F8F8F')
+    label1 = Label(crea,text='MINECRAFT',font=('minecraft evenings',36),foreground='#262626')
+    label2 = Label(crea,text='Creatival',font=('minecraft',14),foreground='#8F8F8F')
 
     button1 = Button(crea,command=crea_wave_g,text='Wave And Grass Landform',font=('minecraft',14),width=25,height=1,foreground='white',background='grey',activeforeground='white',activebackground='#707070')
     button2 = Button(crea,command=crea_flat_g,text='Flat And Grass Landform',font=('minecraft',14),width=25,height=1,foreground='white',background='grey',activeforeground='white',activebackground='#707070')
@@ -51,11 +51,11 @@ def survival():
 
     surv.geometry('450x250')
     surv.iconbitmap('_internal/icon/icon.ico')
-    surv.title('MINECRAFT 1.0.0.50 - New World - Survival')
+    surv.title('MINECRAFT 2.0.0.57 - New World - Survival')
 
 
-    label1 = Label(surv,text='MINECRAFT',font=('minecrafter',36),foreground='#262626')
-    label2 = Label(surv,text='Survival',font=('minecraft ae pixel',14),foreground='#8F8F8F')
+    label1 = Label(surv,text='MINECRAFT',font=('minecraft evenings',36),foreground='#262626')
+    label2 = Label(surv,text='Survival',font=('minecraft',14),foreground='#8F8F8F')
 
     button1 = Button(surv,command=random_landform,text='Random Landform',font=('minecraft',14),width=25,height=1,foreground='white',background='grey',activeforeground='white',activebackground='#707070')
     
@@ -72,11 +72,11 @@ def new_world():
 
     new.geometry('600x350')
     new.iconbitmap('_internal/icon/icon.ico')
-    new.title('MINECRAFT 1.0.0.50 - New World')
+    new.title('MINECRAFT 2.0.0.57 - New World')
 
 
-    label1 = Label(new,text='MINECRAFT',font=('minecrafter',48)       ,foreground='#262626')
-    label2 = Label(new,text='New World',font=('minecraft ae pixel',20),foreground='#8F8F8F')
+    label1 = Label(new,text='MINECRAFT',font=('minecraft evenings',48)       ,foreground='#262626')
+    label2 = Label(new,text='New World',font=('minecraft',20),foreground='#8F8F8F')
 
     padding1 = Label(new,text='',font=('微软雅黑',18))
     button1 = Button(new,command=creatival,text='Creatival',font=('minecraft',20),width=25,height=1,foreground='white',background='grey',activeforeground='white',activebackground='#707070')
@@ -91,22 +91,25 @@ def new_world():
 
     new.mainloop()
 
+def open_game():
+    subprocess.run(['python','_internal/open_game.py'])
+
 def about():
-    subprocess.run(['python','main/about.py'])
+    subprocess.run(['python','_internal/about.py'])
 
 
 def main():
     root.geometry('850x450')
     root.iconbitmap('_internal/icon/icon.ico')
-    root.title('MINECRAFT 1.0.0.50')
+    root.title('MINECRAFT 2.0.0.57')
 
 
-    label1 = Label(root,text='MINECRAFT'     ,font=('minecrafter',54)       ,foreground='#262626')
-    label2 = Label(root,text='Python Edition',font=('minecraft ae pixel',20),foreground='#8F8F8F')
+    label1 = Label(root,text='MINECRAFT'     ,font=('minecraft evenings',54),foreground='#262626')
+    label2 = Label(root,text='Python Edition',font=('minecraft',18)         ,foreground='#8F8F8F')
 
     padding1 = Label(root,text='',font=('微软雅黑',16))
-    button1 = Button(root,command=new_world ,text='New World' ,font=('minecraft',20),width=30,height=1,foreground='white',background='grey',activeforeground='white',activebackground='#707070')
-    button2 = Button(root                   ,text='Open World (Will Be Open)',font=('minecraft',20),width=30,height=1,foreground='white',background='#505050',activeforeground='white',activebackground='#505050')
+    button1 = Button(root,command=new_world,text='New World'  ,font=('minecraft',20),width=30,height=1,foreground='white',background='grey',activeforeground='white',activebackground='#707070')
+    button2 = Button(root,command=open_game,text='Open A Game',font=('minecraft',20),width=30,height=1,foreground='white',background='grey',activeforeground='white',activebackground='#707070')
 
     padding2 = Label(root,text='',font=('微软雅黑',36))
     button3 = Button(root,command=about,text='About',font=('minecraft',20),width=30,height=1,foreground='white',background='grey',activeforeground='white',activebackground='#707070')

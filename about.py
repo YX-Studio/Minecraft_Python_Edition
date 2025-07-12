@@ -1,24 +1,23 @@
-# Version 1.0.0.50
+# Version 2.0.0.57
 # By YXStudio 2023~2025.
-# Feb.22nd,2025
-
+# July.12th,2025
 
 from tkinter import *
 
 
 root = Tk()
 
-def main():
-    root.iconbitmap('_internal/icon/icon.ico')
-    root.title('MINECRAFT 1.0.0.50 - About')
-    
 
-    label1 = Label(root,text='MINECRAFT',font=('minecrafter',35),foreground='#262626')
-    label2 = Label(root,text='PYTHON EDITION',font=('minecraft ae pixel',10),foreground='#8F8F8F')
-    
+def main():
+    #root.iconbitmap('_internal/icon/icon.ico')
+    root.title('MINECRAFT 2.0.0.54 - About')
+    label1 = Label(root,text='MINECRAFT',font=('minecraft evenings',35),foreground='#262626')
+    label2 = Label(root,text='PYTHON EDITION',font=('minecraft',15),foreground='#8F8F8F')
     padding1 = Label(root,text='',font=('微软雅黑',16))
-    label3 = Label(root,text='Versions',font=('minecrafter',21))
-    label23a = Label(root,text='FEB.22ND,2025',font=('minecraft',10),foreground='black')
+    label3 = Label(root,text='VERSIONS',font=('minecraft evenings',20))
+
+    label24a = Label(root,text='JUL.12TH,2025',font=('minecraft',10),foreground='black')
+    label23a = Label(root,text='Feb.22nd,2025',font=('minecraft',10),foreground='grey')
     label22a = Label(root,text='Jan.1st,2025' ,font=('minecraft',10),foreground='grey')
     label21a = Label(root,text='Nov.24th,2024',font=('minecraft',10),foreground='grey')
     label20a = Label(root,text='Oct.8th,2024' ,font=('minecraft',10),foreground='grey')
@@ -32,14 +31,15 @@ def main():
     label12a = Label(root,text='Aug.6th,2024' ,font=('minecraft',10),foreground='grey')
     label11a = Label(root,text='Aug.5th,2024' ,font=('minecraft',10),foreground='grey')
     label10a = Label(root,text='Jul.16th,2024',font=('minecraft',10),foreground='grey')
-    label9a  = Label(root,text='Jul.13th,2024',font=('minecraft',10),foreground='grey')
-    label8a  = Label(root,text='Jul.12th,2024',font=('minecraft',10),foreground='grey')
-    label7a  = Label(root,text='Feb.13th,2024',font=('minecraft',10),foreground='grey')
-    label6a  = Label(root,text='Feb.9th,2024' ,font=('minecraft',10),foreground='grey')
-    label5a  = Label(root,text='Jun.1st,2024' ,font=('minecraft',10),foreground='grey')
-    label4a  = Label(root,text='Jan.19th,2023',font=('minecraft',10),foreground='grey')
+    label9a = Label(root,text='Jul.13th,2024',font=('minecraft',10),foreground='grey')
+    label8a = Label(root,text='Jul.12th,2024',font=('minecraft',10),foreground='grey')
+    label7a = Label(root,text='Feb.13th,2024',font=('minecraft',10),foreground='grey')
+    label6a = Label(root,text='Feb.9th,2024' ,font=('minecraft',10),foreground='grey')
+    label5a = Label(root,text='Jun.1st,2024' ,font=('minecraft',10),foreground='grey')
+    label4a = Label(root,text='Jan.19th,2023',font=('minecraft',10),foreground='grey')
 
-    label23b = Label(root,text='V1.0.0.50     ',font=('minecraft',10),foreground='black')
+    label24b = Label(root,text='V2.0.0.57'     ,font=('minecraft',10),foreground='black')
+    label23b = Label(root,text='v1.0.0.50'     ,font=('minecraft',10),foreground='grey')
     label22b = Label(root,text='v5.1.0.39-beta',font=('minecraft',10),foreground='grey')
     label21b = Label(root,text='v5.0.0.36-beta',font=('minecraft',10),foreground='grey')
     label20b = Label(root,text='v4.1.0.34-beta',font=('minecraft',10),foreground='grey')
@@ -53,14 +53,15 @@ def main():
     label12b = Label(root,text='v2.1.0.8-beta' ,font=('minecraft',10),foreground='grey')
     label11b = Label(root,text='v2.0.0.5-beta' ,font=('minecraft',10),foreground='grey')
     label10b = Label(root,text='v1.2.0.4-beta' ,font=('minecraft',10),foreground='grey')
-    label9b  = Label(root,text='v1.1.1.3-beta' ,font=('minecraft',10),foreground='grey')
-    label8b  = Label(root,text='v1.1.0.2-beta' ,font=('minecraft',10),foreground='grey')
-    label7b  = Label(root,text='v1.0.0.0-beta' ,font=('minecraft',10),foreground='grey')
-    label6b  = Label(root,text='v0.1.1.0-alpha',font=('minecraft',10),foreground='grey')
-    label5b  = Label(root,text='v0.1.0.0-alpha',font=('minecraft',10),foreground='grey')
-    label4b  = Label(root,text='v0.0.0.0-alpha',font=('minecraft',10),foreground='grey')
+    label9b = Label(root,text='v1.1.1.3-beta' ,font=('minecraft',10),foreground='grey')
+    label8b = Label(root,text='v1.1.0.2-beta' ,font=('minecraft',10),foreground='grey')
+    label7b = Label(root,text='v1.0.0.0-beta' ,font=('minecraft',10),foreground='grey')
+    label6b = Label(root,text='v0.1.1.0-alpha',font=('minecraft',10),foreground='grey')
+    label5b = Label(root,text='v0.1.0.0-alpha',font=('minecraft',10),foreground='grey')
+    label4b = Label(root,text='v0.0.0.0-alpha',font=('minecraft',10),foreground='grey')
     
-    label22c = Label(root,text='====================',font=('minecraft',10),foreground='black')
+    label24c = Label(root,text='====================',font=('minecraft',10),foreground='black')
+    label23c = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
     label22c = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
     label21c = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
     label20c = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
@@ -74,27 +75,26 @@ def main():
     label12c = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
     label11c = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
     label10c = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
-    label9c  = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
-    label8c  = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
-    label7c  = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
-    label6c  = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
-    label5c  = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
-    label4c  = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
-    
+    label9c = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
+    label8c = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
+    label7c = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
+    label6c = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
+    label5c = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
+    label4c = Label(root,text='--------------------',font=('minecraft',10),foreground='grey')
     padding2 = Label(root,text='',font=('微软雅黑',11))
-    label0a = Label(root,text='ABOUT',font=('minecrafter',22))
-    label0b = Label(root,text='Minecraft Python Edition is a game like Minecraft but written in Python .\nMinecraft Python Edition (MPE) by 2023~2025 YXStudio , is not to Minecraft Java Edition , Minecraft Bedrock Edition , Mojang Studio , 网易 , and Microsoft .\nhttps://github.com/YX-Studio/Minecraft_Python_Edition for more information .',font=('minecraft ae pixel',8),foreground='grey')
-
-
+    label0a = Label(root,text='ABOUT',font=('minecraft evenings',20))
+    label0b = Label(root,text='This project is developed solely for personal interests .\nIt is a game like Minecraft but written in Python .\nMinecraft Python Edition (MPE) by 2023~2025 YXStudio , Not belonging to Minecraft Java Edtion , Minecraft Bedrock Edtion , Mojang Studio , Microsoft , 网易 .\nhttps://github.com/YX-Studio/Minecraft_Python_Edition for more information .',font=('minecraft',8),foreground='grey')
     label1.grid(row=0,columnspan=3)
     label2  .grid(row=1,columnspan=3)
     padding1.grid(row=2,columnspan=3)
     label3  .grid(row=3,columnspan=3)
-
-    line = 23
+    line = 24
+    label24a.grid(row=line-20,column=0)
+    label24c.grid(row=line-20,column=1)
+    label24b.grid(row=line-20,column=2)
     label23a.grid(row=line-19,column=0)
-    label23a.grid(row=line-19,column=1)
-    label23a.grid(row=line-19,column=2)
+    label23c.grid(row=line-19,column=1)
+    label23b.grid(row=line-19,column=2)
     label22a.grid(row=line-18,column=0)
     label22c.grid(row=line-18,column=1)
     label22b.grid(row=line-18,column=2)
@@ -152,11 +152,9 @@ def main():
     label4a.grid(row=line,column=0)
     label4c.grid(row=line,column=1)
     label4b.grid(row=line,column=2)
-
     padding2.grid(row=line+1,columnspan=3)
     label0a.grid(row=line+2,columnspan=3)
     label0b.grid(row=line+3,columnspan=3)
-
     root.mainloop()
-    
+
 main()

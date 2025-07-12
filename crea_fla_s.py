@@ -1,56 +1,59 @@
-# Version 1.0.0.50
+# Version 2.0.0.57
 # By YXStudio 2023~2025.
-# Feb.22nd,2025
+# Jul.12th,2025
 
 
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 import math
+import json
+import os
+import random
+import tkinter as tk
+from tkinter import messagebox,simpledialog
 
 
 app = Ursina()
 
+grass_texture = load_texture('assets/textures/blocks/grass_block.png')
+stone_texture = load_texture('assets/textures/blocks/stone_block.png')
+brick_texture = load_texture('assets/textures/blocks/brick_block.png')
+dirt_texture = load_texture('assets/textures/blocks/dirt_block.png')
+wood_texture = load_texture('assets/textures/blocks/wood_block.png')
+diamond_texture = load_texture('assets/textures/blocks/diamond_block.png')
+bedrock_texture = load_texture('assets/textures/blocks/bedrock_block.png')
+tree_texture = load_texture('assets/textures/blocks/tree_block.png')
+leaves_texture = load_texture('assets/textures/blocks/leaves_block.png')
+sand_texture = load_texture('assets/textures/blocks/sand_block.png')
+glass_texture = load_texture('assets/textures/blocks/glass_block.png')
 
-grass_texture      = load_texture('assets/textures/blocks/grass_block.png')
-stone_texture      = load_texture('assets/textures/blocks/stone_block.png')
-brick_texture      = load_texture('assets/textures/blocks/brick_block.png')
-dirt_texture       = load_texture('assets/textures/blocks/dirt_block.png')
-wood_texture       = load_texture('assets/textures/blocks/wood_block.png')
-diamond_texture    = load_texture('assets/textures/blocks/diamond_block.png')
-bedrock_texture    = load_texture('assets/textures/blocks/bedrock_block.png')
-tree_texture       = load_texture('assets/textures/blocks/tree_block.png')
-leaves_texture     = load_texture('assets/textures/blocks/leaves_block.png')
-sand_texture       = load_texture('assets/textures/blocks/sand_block.png')
-glass_texture      = load_texture('assets/textures/blocks/glass_block.png')
+barrier_texture = load_texture('assets/textures/blocks/barrier_block.png')
 
-barrier_texture    = load_texture('assets/textures/blocks/barrier_block.png')
+inv1_texture = load_texture('assets/textures/inventorys/hotbar1.png')
+inv2_texture = load_texture('assets/textures/inventorys/hotbar2.png')
+inv3_texture = load_texture('assets/textures/inventorys/hotbar3.png')
+inv4_texture = load_texture('assets/textures/inventorys/hotbar4.png')
+inv5_texture = load_texture('assets/textures/inventorys/hotbar5.png')
+inv6_texture = load_texture('assets/textures/inventorys/hotbar6.png')
+inv7_texture = load_texture('assets/textures/inventorys/hotbar7.png')
+inv8_texture = load_texture('assets/textures/inventorys/hotbar8.png')
+inv9_texture = load_texture('assets/textures/inventorys/hotbar9.png')
+inv11_texture = load_texture('assets/textures/inventorys/hotbar11.png')
+inv12_texture = load_texture('assets/textures/inventorys/hotbar12.png')
 
-inv_texture        = load_texture('assets/textures/inventorys/inventory.png')
-inv1_texture       = load_texture('assets/textures/inventorys/inventory1.png')
-inv2_texture       = load_texture('assets/textures/inventorys/inventory2.png')
-inv3_texture       = load_texture('assets/textures/inventorys/inventory3.png')
-inv4_texture       = load_texture('assets/textures/inventorys/inventory4.png')
-inv5_texture       = load_texture('assets/textures/inventorys/inventory5.png')
-inv6_texture       = load_texture('assets/textures/inventorys/inventory6.png')
-inv7_texture       = load_texture('assets/textures/inventorys/inventory7.png')
-inv8_texture       = load_texture('assets/textures/inventorys/inventory8.png')
-inv9_texture       = load_texture('assets/textures/inventorys/inventory9.png')
-inv11_texture      = load_texture('assets/textures/inventorys/inventory11.png')
-inv12_texture      = load_texture('assets/textures/inventorys/inventory12.png')
+arm_texture = load_texture('assets/textures/arm/arm_texture.png')
 
-arm_texture        = load_texture('assets/textures/arm/arm_texture.png')
-
-sky_noon_texture   = load_texture('assets/textures/sky/skybox_noon.png')
-sky_noon1_texture  = load_texture('assets/textures/sky/skybox_noon1.png')
-sky_night_texture  = load_texture('assets/textures/sky/skybox_night.png')
+sky_noon_texture = load_texture('assets/textures/sky/skybox_noon.png')
+sky_noon1_texture = load_texture('assets/textures/sky/skybox_noon1.png')
+sky_night_texture = load_texture('assets/textures/sky/skybox_night.png')
 sky_night1_texture = load_texture('assets/textures/sky/skybox_night1.png')
 sky_night2_texture = load_texture('assets/textures/sky/skybox_night2.png')
 
-sun_texture        = load_texture('assets/textures/sun/sun.png')
+sun_texture = load_texture('assets/textures/sun/sun.png')
 
-sight_texture      = load_texture('assets/textures/sight/sight.png')
+sight_texture = load_texture('assets/textures/sight/sight.png')
 
-punch_sound        = Audio('assets/sounds/punch_sound.m4a',loop=False,autoplay=False)
+punch_sound = Audio('assets/sounds/punch_sound.m4a', loop=False, autoplay=False)
 
 window.fps_counter.enabled = True
 window.exit_button.visible = False
@@ -60,9 +63,8 @@ sun_angle = 0
 sun_move = 0
 
 
-def input(key):
-    if key == 'escape':
-        quit()
+if not os.path.exists('saves'):
+    os.makedirs('saves')
 
 
 class Block(Button):
@@ -73,10 +75,25 @@ class Block(Button):
             model = 'assets/blends/block/block',
             texture = texture,
             color = color.rgb(1,1,1),
-            highlight_color = rgb(1.1,1.1,1.1),
+            highlight_color = color.rgb(1.1,1.1,1.1),
             origin_y = 0.5,
             scale = 0.5
         )
+        self.block_type = self.get_block_type(texture)
+
+    def get_block_type(self,texture):
+        if texture == grass_texture: return 1
+        elif texture == stone_texture: return 2
+        elif texture == brick_texture: return 3
+        elif texture == dirt_texture: return 4
+        elif texture == wood_texture: return 5
+        elif texture == diamond_texture: return 6
+        elif texture == tree_texture: return 7
+        elif texture == leaves_texture: return 8
+        elif texture == bedrock_texture: return 9
+        elif texture == sand_texture: return 11
+        elif texture == glass_texture: return 12
+        else: return 1
 
     def input(self,key):
         if self.hovered:
@@ -84,25 +101,25 @@ class Block(Button):
                 punch_sound.play()
                 if block_pick == 1:
                     Block(position=self.position+mouse.normal,texture=grass_texture)
-                if block_pick == 2:
+                elif block_pick == 2:
                     Block(position=self.position+mouse.normal,texture=stone_texture)
-                if block_pick == 3:
+                elif block_pick == 3:
                     Block(position=self.position+mouse.normal,texture=brick_texture)
-                if block_pick == 4:
+                elif block_pick == 4:
                     Block(position=self.position+mouse.normal,texture=dirt_texture)
-                if block_pick == 5:
+                elif block_pick == 5:
                     Block(position=self.position+mouse.normal,texture=wood_texture)
-                if block_pick == 6:
+                elif block_pick == 6:
                     Block(position=self.position+mouse.normal,texture=diamond_texture)
-                if block_pick == 7:
+                elif block_pick == 7:
                     Block(position=self.position+mouse.normal,texture=tree_texture)
-                if block_pick == 8:
+                elif block_pick == 8:
                     Block(position=self.position+mouse.normal,texture=leaves_texture)
-                if block_pick == 9:
+                elif block_pick == 9:
                     Block(position=self.position+mouse.normal,texture=bedrock_texture)
-                if block_pick == 11:
+                elif block_pick == 11:
                     Block(position=self.position+mouse.normal,texture=sand_texture)
-                if block_pick == 12:
+                elif block_pick == 12:
                     Block(position=self.position+mouse.normal,texture=glass_texture)
                                 
             if key == 'left mouse down':
@@ -126,12 +143,11 @@ class Inventory(Entity):
     def __init__(self,texture=inv1_texture):
         super().__init__(
             parent = camera.ui,
-            position = Vec2(0,-0.425),
+            position = (0,-0.460),
             model = 'quad',
             texture = texture,
             scale = (0.658,0.08)
         )
-inventory = Inventory()
 
 class Sun(Entity):
     def __init__(self,height=0,weight=50,angle=0):
@@ -143,7 +159,6 @@ class Sun(Entity):
             texture = sun_texture,
             scale = 7
         )
-sun = Sun()
 
 class Sky(Entity):
     def __init__(self,texture=sky_noon_texture):
@@ -154,25 +169,23 @@ class Sky(Entity):
             scale = 150,
             double_sided = True
         )
-sky = Sky()
 
 class Hand(Entity):
     def __init__(self):
         super().__init__(
             parent = camera.ui,
-            rotation = Vec3(150,-10,0),
-            position = Vec2(0.9,-0.7),
+            rotation = (150,-10,0),
+            position = (0.9,-0.7),
             model = 'assets/blends/arm/arm',
             texture = arm_texture,
             scale = 0.2
         )
                 
     def active(self):
-        self.position = Vec2(0.7,-0.6)
+        self.position = (0.7,-0.6)
                 
     def passive(self):
-        self.position = Vec2(0.9,-0.7)
-hand = Hand()
+        self.position = (0.9,-0.7)
 
 class Sight(Entity):
     def __init__(self):
@@ -184,9 +197,50 @@ class Sight(Entity):
             color = color.color(0,1,0,0.5),
             scale = (0.035,0.035)
         )
-Sight()
 
-def creat_world():
+
+def save_game():
+    root = tk.Tk()
+    root.withdraw()
+    save_name = simpledialog.askstring('Save The Game','Please enter a name for the archive :')
+    root.destroy()
+    
+    if not save_name:
+        return
+    
+    SAVE_FILE = f'saves/{save_name}_game_save.json'
+    
+    blocks_data = []
+    for entity in scene.entities:
+        if isinstance(entity,Block):
+            blocks_data.append({
+                'position': [entity.position.x,entity.position.y,entity.position.z],
+                'type': entity.block_type
+            })
+    
+    player_data = {
+        'position': [player.position.x,player.position.y,player.position.z],
+        'rotation': [player.rotation.x,player.rotation.y,player.rotation.z],
+        'block_pick': block_pick
+    }
+    
+    game_data = {
+        'sun_angle': sun_angle,
+        'sun_move': sun_move,
+        'save_name': save_name
+    }
+    
+    save_data = {
+        'blocks': blocks_data,
+        'player': player_data,
+        'game': game_data
+    }
+    
+    with open(SAVE_FILE,'w',encoding='utf-8') as f:
+        json.dump(save_data,f,ensure_ascii=False,indent=4)
+
+
+def create_world():
     for z in range(13):
         for x in range(13):
             Block(position=(x,0,z),texture=sand_texture)
@@ -198,6 +252,7 @@ def creat_world():
                 Block(position=(x,-3,z),texture=diamond_texture)
             else:
                 Block(position=(x,-3,z),texture=stone_texture)
+            
             rand_dia = random.randint(1,100)
             if rand_dia <= 10:
                 Block(position=(x,-4,z),texture=diamond_texture)
@@ -206,103 +261,77 @@ def creat_world():
             
             Block(position=(x,-5,z),texture=bedrock_texture)
 
-    for br1 in range(13):
-        Barrier(position=(br1,-3,-1))
-        Barrier(position=(br1,-2,-1))
-        Barrier(position=(br1,-1,-1))
-        Barrier(position=(br1,0 ,-1))
-        Barrier(position=(br1,1 ,-1))
-        Barrier(position=(br1,2 ,-1))
-        Barrier(position=(br1,3 ,-1))
-    for br2 in range(13):
-        Barrier(position=(br2,-3,13))
-        Barrier(position=(br2,-2,13))
-        Barrier(position=(br2,-1,13))
-        Barrier(position=(br2,0 ,13))
-        Barrier(position=(br2,1 ,13))
-        Barrier(position=(br2,2 ,13))
-        Barrier(position=(br2,3 ,13))
-    for br3 in range(13):
-        Barrier(position=(-1,-3,br3))
-        Barrier(position=(-1,-2,br3))
-        Barrier(position=(-1,-1,br3))
-        Barrier(position=(-1,0 ,br3))
-        Barrier(position=(-1,1 ,br3))
-        Barrier(position=(-1,2 ,br3))
-        Barrier(position=(-1,3 ,br3))
-    for br4 in range(13):
-        Barrier(position=(13,-3,br4))
-        Barrier(position=(13,-2,br4))
-        Barrier(position=(13,-1,br4))
-        Barrier(position=(13,0 ,br4))
-        Barrier(position=(13,1 ,br4))
-        Barrier(position=(13,2 ,br4))
-        Barrier(position=(13,3 ,br4))
-creat_world()
+    for i in range(13):
+        for y in range(-3,4):
+            Barrier(position=(i,y,-1))
+            Barrier(position=(i,y,13))
+            Barrier(position=(-1,y,i))
+            Barrier(position=(13,y,i))
+
+
+inventory = Inventory()
+hand = Hand()
+Sight()
+sky = Sky()
+sun = Sun()
+
+
+create_world()
+
+
+def input(key):
+    global block_pick,inventory
+    
+    if key == 'escape':
+        root = tk.Tk()
+        root.withdraw()
+        save = messagebox.askyesnocancel('Game Exit','Do you want to save the game?')
+        if save is not None:
+            if save:
+                save_game()
+            quit()
+        root.destroy()
+    elif key == 'q':
+        window.exit_button.visible = not window.exit_button.visible
+    elif key == 'e':
+        window.fps_counter.enabled = not window.fps_counter.enabled
+    
+    hotkeys = {
+        '1': 1,
+        '2': 2,
+        '3': 3,
+        '4': 4,
+        '5': 5,
+        '6': 6,
+        '7': 7,
+        '8': 8,
+        '9': 9,
+        '0': 11,
+        '-': 12
+    }
+    
+    if key in hotkeys:
+        block_pick = hotkeys[key]
+        destroy(inventory)
+        inventory_textures = {
+            1: inv1_texture,
+            2: inv2_texture,
+            3: inv3_texture,
+            4: inv4_texture,
+            5: inv5_texture,
+            6: inv6_texture,
+            7: inv7_texture,
+            8: inv8_texture,
+            9: inv9_texture,
+            11: inv11_texture,
+            12: inv12_texture
+        }
+        inventory = Inventory(inventory_textures.get(block_pick,inv1_texture))
 
 
 def update():
-    global block_pick
-    global inventory
-    global sun_angle
-    global sun_move    
-    global sun
-    global sky
-
-    if held_keys['1'] and block_pick < 10:
-        block_pick = 1
-        destroy(inventory)
-        inventory = Inventory(inv1_texture)
-    if held_keys['2'] and block_pick < 10:
-        block_pick = 2
-        destroy(inventory)
-        inventory = Inventory(inv2_texture)
-    if held_keys['3'] and block_pick < 10:
-        block_pick = 3
-        destroy(inventory)
-        inventory = Inventory(inv3_texture)
-    if held_keys['4'] and block_pick < 10:
-        block_pick = 4
-        destroy(inventory)
-        inventory = Inventory(inv4_texture)
-    if held_keys['5'] and block_pick < 10:
-        block_pick = 5
-        destroy(inventory)
-        inventory = Inventory(inv5_texture)
-    if held_keys['6'] and block_pick < 10:
-        block_pick = 6
-        destroy(inventory)
-        inventory = Inventory(inv6_texture)
-    if held_keys['7'] and block_pick < 10:
-        block_pick = 7
-        destroy(inventory)
-        inventory = Inventory(inv7_texture)
-    if held_keys['8'] and block_pick < 10:
-        block_pick = 8
-        destroy(inventory)
-        inventory = Inventory(inv8_texture)
-    if held_keys['9'] and block_pick < 10:
-        block_pick = 9
-        destroy(inventory)
-        inventory = Inventory(inv9_texture)
-    if held_keys['z']:
-        block_pick = 1
-        destroy(inventory)
-        inventory = Inventory(inv1_texture)
-
-    if held_keys['1'] and block_pick > 10:
-        block_pick = 11
-        destroy(inventory)
-        inventory = Inventory(inv11_texture)
-    if held_keys['2'] and block_pick > 10:
-        block_pick = 12
-        destroy(inventory)
-        inventory = Inventory(inv12_texture)
-    if held_keys['x']:
-        block_pick = 11
-        destroy(inventory)
-        inventory = Inventory(inv11_texture)
-                    
+    global sun_angle,sun_move,sun,sky
+    
     if held_keys['left mouse'] or held_keys['right mouse']:
         hand.active()
     else:
@@ -310,27 +339,29 @@ def update():
     
     if sun_move % 2 == 0:
         destroy(sun)
-        sun = Sun(weight=math.cos(math.radians(sun_angle))*50,height=math.sin(math.radians(sun_angle))*50,angle=sun_angle)
+        sun = Sun(
+            weight = math.cos(math.radians(sun_angle)) * 50, 
+            height = math.sin(math.radians(sun_angle)) * 50, 
+            angle = sun_angle
+        )
         sun_angle += 0.01
     sun_move += 1
 
-    if math.sin(math.radians(sun_angle)) * 50 <= 1.5:
-        destroy(sky)
-        sky = Sky(texture=sky_night_texture)
-    elif math.sin(math.radians(sun_angle)) * 50 <= 2:
-        destroy(sky)
-        sky = Sky(texture=sky_night1_texture)
-    elif math.sin(math.radians(sun_angle)) * 50 <= 2.5:
-        destroy(sky)
-        sky = Sky(texture=sky_night2_texture)
-    elif math.sin(math.radians(sun_angle)) * 50 <= 3:
-        destroy(sky)
-        sky = Sky(texture=sky_noon1_texture)
-    else:
-        destroy(sky)
-        sky = Sky(texture=sky_noon_texture)
+    sun_height = math.sin(math.radians(sun_angle)) * 50
+    sky_textures = [
+        (1.5,sky_night_texture),
+        (2.0,sky_night1_texture),
+        (2.5,sky_night2_texture),
+        (3.0,sky_noon1_texture)
+    ]
+    
+    sky.texture = sky_noon_texture
+    for height, tex in sky_textures:
+        if sun_height <= height:
+            sky.texture = tex
+            break
 
- 
+
 player = FirstPersonController()
 
 
