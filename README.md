@@ -230,10 +230,10 @@ The above file "LICENSE.txt" can be found in the game root directory "Minecraft/
 
 ## 3 UI
 ### 3.1 Home Page
-![Homepage](intro/fpg.png "Homepage")
+![Homepage](fpg.png "Homepage")
 
 ### 3.2 Game Window
-![Gamemode](intro/gm.png "Gamemode")
+![Gamemode](gm.png "Gamemode")
 - It may be something different from different version .
 
 
@@ -343,27 +343,27 @@ The above file "LICENSE.txt" can be found in the game root directory "Minecraft/
 
 ## 8 Game Load And Save System ( GLSS )
 ### 8.1 Load
-![Homepage](intro/fpg.png "Homepage")
+![Homepage](fpg.png "Homepage")
 - (2) Enter to load game .
 
-![Open A World](intro/rw2.png "Open A World")
+![Open A World](rw2.png "Open A World")
 - (1) Load archive .
 - (2) Back to homepage .
 
-![No Archive Files](intro/rw3.png "No Archive Files")
+![No Archive Files](rw3.png "No Archive Files")
 - There not any archive files , and back to first page .
 
-![Select An Archive File](intro/rw4.png "Select The Archive File")
+![Select An Archive File](rw4.png "Select The Archive File")
 - (1) Select an archive file ( Only in " /saves " ) .
 - (2) Or input file name .
 - (3) Open it .
 - (4) Cancle opening and back to homepage .
 
 ### 8.2 Save
-![Make Sure To Save The Game](intro/rw5.png "Make Sure To The Save Game")
+![Make Sure To Save The Game](rw5.png "Make Sure To The Save Game")
 - Make sure to save the game .
 
-![Input The Name Of The Game](intro/rw6.png "Input The Name Of The Game")
+![Input The Name Of The Game](rw6.png "Input The Name Of The Game")
 - Input the name of the game .
 
 
