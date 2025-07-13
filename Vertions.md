@@ -2,6 +2,15 @@
 
 --------------------------------------------------
 
+v2.0.0.57 --- Jul.12th,2025
+- Game Load And Save System , ( GLSS ) .
+- New Inventory named Hotbar .
+- All New README file .
+- New font .
+- Add FPS and exit button switch .
+- Modify the logic of the Hotbar .
+- Fix some bug .
+
 v1.0.0.50 --- Feb.19th,2025
 - Resign the home page ( the old startpage ) , use new fonts .
 - Modify the logic of the home page .
