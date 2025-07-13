@@ -1,4 +1,4 @@
-# MINECRAFT PYTHON EDITION(MPE)(v1.0.0.50 .1st,2025)
+# MINECRAFT PYTHON EDITION(MPE)(v2.0.0.57 Jul.12th,2025)
 
 --------------------------------------------------
 
